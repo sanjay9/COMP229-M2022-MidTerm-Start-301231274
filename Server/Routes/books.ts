@@ -1,3 +1,12 @@
+/*
+File: books.ts
+Name: Sanjay Mahabir
+Student Id: 301231274
+Web App Name: My Favourite Books
+Date: June 25th 2022
+*/
+
+
 // modules required for routing
 import express from 'express';
 const router = express.Router();
@@ -32,7 +41,7 @@ router.get('/add', (req, res, next) => {
      * ADD CODE HERE *
      *****************/
              
-    //books/details
+    //Display details form with empty fields
     res.render('books/details', { title: 'Add Book', page: 'details', books:'' });
    
 
@@ -45,6 +54,7 @@ router.post('/add', (req, res, next) => {
      * ADD CODE HERE *
      *****************/
 
+     //new book record with form data
      let BookRec = new book({       
         "Title": req.body.title,
         "Description": req.body.description,
@@ -53,6 +63,7 @@ router.post('/add', (req, res, next) => {
         "Genre": req.body.genre
       });
 
+      //Add new record
       book.create(BookRec, function(err:any)
       {
         // Database error
@@ -62,6 +73,7 @@ router.post('/add', (req, res, next) => {
           res.end(err);
         }
         
+        //reload book list
         res.redirect('/books');
       });
 
@@ -76,6 +88,7 @@ router.get('/:id', (req, res, next) => {
      *****************/
      let id = req.params.id;
 
+     //find book record by id
      book.findById(id, function(err:any, books:any)
      {
        // Database error
@@ -101,6 +114,7 @@ router.post('/:id', (req, res, next) => {
      *****************/
      let id = req.params.id;
 
+     //Save changes to book record
      let BookRec = new book({
          "_id": id,
          "Title": req.body.title,
@@ -132,6 +146,7 @@ router.get('/delete/:id', (req, res, next) => {
     /*****************
      * ADD CODE HERE *
      *****************/
+    //delete record with the id
      let id = req.params.id;
      book.remove({_id: id}, function(err)
      {
