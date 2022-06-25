@@ -18,8 +18,8 @@
                   <th class="text-center">Price</th>
                   <th class="text-center">Author</th>
                   <th class="text-center">Genre</th>
-                  <th class="text-center"></th>
-                  <th class="text-center"></th>
+                  <th class="text-center">Edit</th>
+                  <th class="text-center">Delete</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -35,12 +35,46 @@
                     <!-- ------------------------ -->
                     <!-- ADD the EDIT BUTTON HERE -->
                     <!-- ------------------------ -->
+
+                    <a href="/books/updateview/<%= books[count]._id %>" class="btn btn-primary btn-sm">
+                      <i class="fas fa-pencil-alt"></i> Update
+                    </a>
+
+
                   </td>
 
                   <td class="text-center">
                     <!-- ------------------------ -->
                     <!-- ADD the DELETE BUTTON HERE -->
                     <!-- ------------------------ -->
+                    <!--https://getbootstrap.com/docs/5.2/components/modal/-->
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal<%= count %>">
+                        <i class="fas fa-trash-alt"></i> DELETE
+                    </button>
+
+
+                    <!-- Modal -->
+                    <!--Important, ids must be unique to ensure the correct record is deleted (count concatenated to end of id)-->
+                    <div class="modal fade" id="exampleModal<%= count %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Are you sure you wish to delete <%= books[count].Title %>?</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            This action cannot be undone.
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                              <a href="/books/delete/<%= books[count]._id %>" class="btn btn-danger">
+                              <i class="fas fa-trash-alt"></i> Delete</a>                                                                             
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
                   </td>
                 </tr>
                 <% } %>
