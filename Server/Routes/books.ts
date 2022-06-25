@@ -49,6 +49,23 @@ router.get('/:id', (req, res, next) => {
     /*****************
      * ADD CODE HERE *
      *****************/
+     let id = req.params.id;
+
+     book.findById(id, function(err, books)
+     {
+       // Database error
+       if(err)
+       {
+         console.error(err.message);
+         res.end(err);
+       }
+       
+       //books/details
+       res.render('books/details', { title: 'Edit Book', page: 'details', books: books });
+     });
+
+
+
 });
 
 // POST - process the information passed from the details form and update the document
@@ -57,6 +74,30 @@ router.post('/:id', (req, res, next) => {
     /*****************
      * ADD CODE HERE *
      *****************/
+     let id = req.params.id;
+
+     let BookRec = new book({
+         "_id": id,
+         "Title": req.body.title,
+         "Description": req.body.description,
+         "Price": req.body.price,
+         "Author": req.body.author,
+         "Genre": req.body.genre
+     });
+ 
+     book.updateOne({_id: id}, BookRec, function(err)
+     {
+       // Database error
+       if(err)
+       {
+         console.error(err.message);
+         res.end(err);
+       }
+       
+       res.redirect('/books/');
+     });
+
+
 
 });
 
@@ -76,7 +117,7 @@ router.get('/delete/:id', (req, res, next) => {
          res.end(err);
        }
        
-       res.redirect('/books');
+       res.redirect('/books/');
      });
 
 
