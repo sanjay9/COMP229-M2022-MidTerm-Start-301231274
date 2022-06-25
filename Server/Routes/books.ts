@@ -66,6 +66,21 @@ router.get('/delete/:id', (req, res, next) => {
     /*****************
      * ADD CODE HERE *
      *****************/
+     let id = req.params.id;
+     book.remove({_id: id}, function(err)
+     {
+       // Database error
+       if(err)
+       {
+         console.error(err.message);
+         res.end(err);
+       }
+       
+       res.redirect('/books');
+     });
+
+
+
 });
 
 
