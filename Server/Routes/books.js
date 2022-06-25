@@ -22,8 +22,23 @@ router.get('/', (req, res, next) => {
     });
 });
 router.get('/add', (req, res, next) => {
+    res.render('books/details', { title: 'Add Book', page: 'details', books: '' });
 });
 router.post('/add', (req, res, next) => {
+    let BookRec = new books_1.default({
+        "Title": req.body.title,
+        "Description": req.body.description,
+        "Price": req.body.price,
+        "Author": req.body.author,
+        "Genre": req.body.genre
+    });
+    books_1.default.create(BookRec, function (err) {
+        if (err) {
+            console.error(err.message);
+            res.end(err);
+        }
+        res.redirect('/books');
+    });
 });
 router.get('/:id', (req, res, next) => {
     let id = req.params.id;
@@ -60,7 +75,7 @@ router.get('/delete/:id', (req, res, next) => {
             console.error(err.message);
             res.end(err);
         }
-        res.redirect('/books/');
+        res.redirect('/books');
     });
 });
 //# sourceMappingURL=books.js.map

@@ -31,6 +31,10 @@ router.get('/add', (req, res, next) => {
     /*****************
      * ADD CODE HERE *
      *****************/
+             
+    //books/details
+    res.render('books/details', { title: 'Add Book', page: 'details', books:'' });
+   
 
 });
 
@@ -40,6 +44,27 @@ router.post('/add', (req, res, next) => {
     /*****************
      * ADD CODE HERE *
      *****************/
+
+     let BookRec = new book({       
+        "Title": req.body.title,
+        "Description": req.body.description,
+        "Price": req.body.price,
+        "Author": req.body.author,
+        "Genre": req.body.genre
+      });
+
+      book.create(BookRec, function(err:any)
+      {
+        // Database error
+        if(err)
+        {
+          console.error(err.message);
+          res.end(err);
+        }
+        
+        res.redirect('/books');
+      });
+
 
 });
 
@@ -51,7 +76,7 @@ router.get('/:id', (req, res, next) => {
      *****************/
      let id = req.params.id;
 
-     book.findById(id, function(err, books)
+     book.findById(id, function(err:any, books:any)
      {
        // Database error
        if(err)
@@ -85,7 +110,7 @@ router.post('/:id', (req, res, next) => {
          "Genre": req.body.genre
      });
  
-     book.updateOne({_id: id}, BookRec, function(err)
+     book.updateOne({_id: id}, BookRec, function(err:any)
      {
        // Database error
        if(err)
@@ -117,7 +142,7 @@ router.get('/delete/:id', (req, res, next) => {
          res.end(err);
        }
        
-       res.redirect('/books/');
+       res.redirect('/books');
      });
 
 
